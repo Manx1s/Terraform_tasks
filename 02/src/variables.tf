@@ -33,6 +33,41 @@ variable "vpc_name" {
 
 variable "vms_ssh_root_key" {
   type        = string
-  default     = "<your_ssh_ed25519_key>"
+  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILlgFrkP4h+0cOmI1w9DdNGjKHpHtY9V2Wqc8vYfisi0 anton@Ubuntu"
   description = "ssh-keygen -t ed25519"
 }
+
+variable "vms_res" {
+  type = map(object({
+    cores = number
+    memory = number
+    core_fraction = number
+    platform_id = string
+    image_family = string
+  }))
+  default = {
+    web = {
+     cores = 2
+     memory = 1
+     core_fraction = 20
+     platform_id = "standard-v3"
+     image_family = "ubuntu-2004-lts"
+    }
+    db = {
+      cores = 2
+      memory = 2
+      core_fraction = 20
+      platform_id = "standard-v3"
+      image_family = "ubuntu-2004-lts"
+    }
+  }
+}
+
+variable "metadata" {
+  type = map(string)
+  default = {
+    serial-port-enable = 1
+    ssh-keys           = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILlgFrkP4h+0cOmI1w9DdNGjKHpHtY9V2Wqc8vYfisi0 anton@Ubuntu"
+  }
+}
+
